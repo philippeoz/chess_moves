@@ -28,14 +28,16 @@ class KnightMovesSerializer(serializers.Serializer):
     Serializer to Knight moves endpoint
     """
     position = serializers.RegexField(
-        regex=r'^[N]([a-z]|[0-9]+_)[0-9]+$',
-        max_length=None,
+        regex=r'^[N][a-z][0-9]+$',
+        max_length=4,
         min_length=3,
         trim_whitespace=True,
         required=True
     )
-    board_size = serializers.IntegerField(min_value=1, required=False)
-    turns = serializers.IntegerField(min_value=1, required=False)
+    board_size = serializers.IntegerField(
+        max_value=26, min_value=1, required=False)
+    turns = serializers.IntegerField(
+        min_value=1, required=False)
 
     @property
     def get_tree_of_possible_moves(self):

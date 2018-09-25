@@ -1,6 +1,6 @@
 from decouple import config
  
-# from dj_database_url import parse as db_url
+from dj_database_url import parse as db_url
  
 from unipath import Path
 
@@ -47,10 +47,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'database',
-    }
+    'default': config('DATABASE_URL', cast=db_url)
 }
 
 # Internationalization

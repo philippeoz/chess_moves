@@ -16,7 +16,7 @@ services:
   app:
     build: .
     container_name: chess_moves_django
-    command: /django_start.sh
+    command: bash -c "/wait_for_it.sh db:5432 && /django_start.sh"
     depends_on:
       - db
     volumes:
@@ -26,7 +26,19 @@ services:
       - "8000"
     restart: always
     environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: postgresql
+      DB_PORT: 5432
+      DB_DATABASE: postgres
+      DB_USERNAME: postgres
       DEBUG: "False"
+      DATABASE_URL: postgres://postgres@db/postgres
+  
+  db:
+    image: postgres:latest
+    container_name: chess_db
+    environment:         
+      - POSTGRES_DB=postgres
 
 volumes:
   static-data:

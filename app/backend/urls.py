@@ -22,7 +22,7 @@ from django.views.generic import RedirectView
 
 import django.contrib.auth.views as auth_views
 
-from backend.api import urls as api_urls
+from backend.core import urls as core_urls
 
 
 urlpatterns = [
@@ -31,7 +31,7 @@ urlpatterns = [
     # path('login/', auth_views.login, {'redirect_authenticated_user': True}, name='login'),
     # path('logout/', auth_views.logout_then_login, {'login_url': settings.LOGIN_URL}, name='logout'),
 
-    path('api/', include(api_urls))
+    path('api/', include(core_urls))
 ]
 
 if settings.DEBUG:

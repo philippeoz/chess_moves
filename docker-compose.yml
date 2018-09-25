@@ -1,0 +1,32 @@
+version: '2'  
+services:  
+  nginx:
+    image: nginx:latest
+    container_name: chess_moves_nginx
+    ports:
+      - "80:8000"
+    volumes:
+      - ./app:/app
+      - ./config/nginx:/etc/nginx/conf.d
+      - static-data:/staticfiles
+    depends_on:
+      - django
+    restart: always
+
+  app:
+    build: .
+    container_name: chess_moves_django
+    command: /django_start.sh
+    depends_on:
+      - db
+    volumes:
+      - ./app:/app
+      - static-data:/app/frontend/staticfiles
+    expose:
+      - "8000"
+    restart: always
+    environment:
+      DEBUG: "False"
+
+volumes:
+  static-data:

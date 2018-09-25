@@ -45,10 +45,12 @@ ROOT_URLCONF = 'backend.urls'
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
-# PROJECT_DB_URL = config('DATABASE_URL', cast=db_url)
-# DATABASES = {  
-#     'default': PROJECT_DB_URL,
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'database',
+    }
+}
 
 # Internationalization
 LANGUAGE_CODE = 'pt-br'

@@ -4,9 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
+pylint = "*"
+bpython = "*"
 
 [packages]
-django = "*"
+django = "==2.0"
 python-decouple = "*"
 dj-database-url = "*"
 unipath = "*"

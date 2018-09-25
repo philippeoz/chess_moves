@@ -22,7 +22,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            # BASE_DIR.child('frontend', 'templates'),
+            BASE_DIR.child('frontend', 'templates'),
         ],
         'OPTIONS': {
             'debug': DEBUG,

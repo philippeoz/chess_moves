@@ -9,8 +9,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=Csv())
 
 # Authentication Backends
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'backend.core.backends.FailBackend'
+    'django.contrib.auth.backends.ModelBackend'
 ]
 
 # Password validators

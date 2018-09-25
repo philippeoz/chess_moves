@@ -4,6 +4,7 @@ from rest_framework import status
 
 from drf_yasg.utils import swagger_auto_schema
 
+from backend.core.mixins import LoggingMixin
 from backend.core.serializers import (
     KnightMovesSerializer, ListMovesSerializer
 )
@@ -11,7 +12,7 @@ from backend.core.serializers import (
 from backend.core.models import Knight
 
 
-class KnightMovesViewSet(GenericViewSet):
+class KnightMovesViewSet(LoggingMixin, GenericViewSet):
     """
     ViewSet to get Knight possible moves
     """

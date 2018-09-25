@@ -47,7 +47,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Database
 DATABASES = {
-    'default': config('DATABASE_URL', cast=db_url)
+    # 'default': config('DATABASE_URL', cast=db_url)
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'mydatabase',
+    }
 }
 
 # Internationalization

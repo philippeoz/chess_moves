@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.conf import settings
 
 from backend.core.models import Knight
 

@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from rest_framework import serializers
 
 from backend.core.models import Knight
@@ -39,5 +41,7 @@ class KnightMovesSerializer(serializers.Serializer):
     def get_tree_of_possible_moves(self):
         return Knight.moves_tree_from_position(
             self.validated_data.get('position'),
-            turns=self.validated_data.get('turns') or 1
+            turns=self.validated_data.get('turns') or settings.TURNS_AMOUNT,
+            board_size=self.validated_data.get(
+                'board_size') or settings.BOARD_SIZE,
         )

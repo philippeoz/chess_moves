@@ -31,7 +31,8 @@ class ChessPiece(models.Model):
         pass
 
     @classmethod
-    def position_from_algebraic_notation(cls, algebraic_position):
+    def position_from_algebraic_notation(
+            cls, algebraic_position, board_size=settings.BOARD_SIZE):
         """
         This method translate simple algebric position notation to
         matrix notation.
@@ -49,11 +50,12 @@ class ChessPiece(models.Model):
             raise Exception('Invalid Chess Piece.')
         return (
             ascii_uppercase.index(algebraic_position[1]),
-            settings.BOARD_SIZE - int(algebraic_position[2:])
+            board_size - int(algebraic_position[2:])
         )
     
     @classmethod
-    def position_to_algebraic_notation(cls, matrix_position):
+    def position_to_algebraic_notation(
+            cls, matrix_position, board_size=settings.BOARD_SIZE):
         """
         This method translate simple matrix position notation to
         algebraic notation.
@@ -69,11 +71,12 @@ class ChessPiece(models.Model):
         col, line = matrix_position
         if matrix_position[0] < len(ascii_lowercase):
             col = ascii_lowercase[col]
-        line = settings.BOARD_SIZE - line
+        line = board_size - line
         return f"{cls.ALGEBRAIC_NOTATION}{col}{line}"
 
     @classmethod
-    def possible_moves_from_position(cls, position):
+    def possible_moves_from_position(
+            cls, position, board_size=settings.BOARD_SIZE):
         """
         This method returns all possible simple moves from specific position
 
@@ -83,36 +86,43 @@ class ChessPiece(models.Model):
         """
 
         if isinstance(position, str):
-            position = cls.position_from_algebraic_notation(position)
+            position = cls.position_from_algebraic_notation(
+                position, board_size)
         
         col_position, row_position = position
 
         for col_move, row_move in cls.MOVES:
             col, row = col_position + col_move, row_position + row_move
-            if settings.BOARD_SIZE > col >= 0 <= row < settings.BOARD_SIZE:
-                yield cls.position_to_algebraic_notation((col, row))
+            if board_size > col >= 0 <= row < board_size:
+                yield cls.position_to_algebraic_notation(
+                    (col, row), board_size)
     
     @classmethod
-    def moves_tree_from_position(cls, position, turns=1):
+    def moves_tree_from_position(
+            cls, position, turns=1, board_size=settings.BOARD_SIZE):
         """
         Return a tree of positions
         """
         if isinstance(position, str):
-            position = cls.position_from_algebraic_notation(position)
+            position = cls.position_from_algebraic_notation(
+                position, board_size)
 
         moves = [
             {
-                'from_position': cls.position_to_algebraic_notation(position),
+                'from_position': cls.position_to_algebraic_notation(
+                    position, board_size),
                 'to_position': move
-            } for move in list(cls.possible_moves_from_position(position))
+            } for move in list(
+                cls.possible_moves_from_position(position, board_size))
         ]
         if turns > 1:
             for move in moves:
                 move['next_turn'] = cls.moves_tree_from_position(
                     cls.position_from_algebraic_notation(
-                        move['to_position']
+                        move['to_position'], board_size
                     ),
-                    turns=turns - 1
+                    turns=turns - 1,
+                    board_size=board_size
                 )
         return moves
 

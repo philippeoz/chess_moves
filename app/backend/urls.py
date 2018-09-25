@@ -22,24 +22,26 @@ from django.views.generic import RedirectView
 
 import django.contrib.auth.views as auth_views
 
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
 from backend.core import urls as core_urls
 
 
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Chess Moves API",
+      default_version='v1',
+      license=openapi.License(name="MIT License"),
+   ),
+   public=True
+)
+
+
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('api/', include(core_urls)),
 
-    # path(
-    #     'login/',
-    #     auth_views.login, {'redirect_authenticated_user': True},
-    #     name='login'
-    # ),
-    # path(
-    #     'logout/',
-    #     auth_views.logout_then_login, {'login_url': settings.LOGIN_URL},
-    #     name='logout'
-    # ),
-
-    path('api/', include(core_urls))
+    path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
 
 if settings.DEBUG:

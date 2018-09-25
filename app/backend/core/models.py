@@ -94,19 +94,24 @@ class ChessPiece(models.Model):
     
     @classmethod
     def moves_tree_from_position(cls, position, turns=1):
+        """
+        Return a tree of positions
+        """
         if isinstance(position, str):
             position = cls.position_from_algebraic_notation(position)
 
         moves = [
             {
-                'from': cls.position_to_algebraic_notation(position),
-                'to': move
+                'from_position': cls.position_to_algebraic_notation(position),
+                'to_position': move
             } for move in list(cls.possible_moves_from_position(position))
         ]
         if turns > 1:
             for move in moves:
                 move['next_turn'] = cls.moves_tree_from_position(
-                    cls.position_from_algebraic_notation(move['to']),
+                    cls.position_from_algebraic_notation(
+                        move['to_position']
+                    ),
                     turns=turns - 1
                 )
         return moves

@@ -13,6 +13,7 @@ python-decouple = "*"
 dj-database-url = "*"
 unipath = "*"
 djangorestframework = "*"
+drf-yasg = "*"
 
 [requires]
 python_version = "3.6"

@@ -5,7 +5,7 @@ from .base import BASE_DIR, DEBUG
  
 # Static files url
 STATIC_URL = config('STATIC_URL', default='/static/')
-STATIC_ROOT = BASE_DIR.child('staticfiles')
+STATIC_ROOT = BASE_DIR.child('frontend', 'staticfiles')
 
 STATICFILES_DIRS = [
     BASE_DIR.child('frontend', 'static'),

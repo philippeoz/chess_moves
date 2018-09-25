@@ -28,11 +28,20 @@ from backend.core import urls as core_urls
 urlpatterns = [
     # path('admin/', admin.site.urls),
 
-    # path('login/', auth_views.login, {'redirect_authenticated_user': True}, name='login'),
-    # path('logout/', auth_views.logout_then_login, {'login_url': settings.LOGIN_URL}, name='logout'),
+    # path(
+    #     'login/',
+    #     auth_views.login, {'redirect_authenticated_user': True},
+    #     name='login'
+    # ),
+    # path(
+    #     'logout/',
+    #     auth_views.logout_then_login, {'login_url': settings.LOGIN_URL},
+    #     name='logout'
+    # ),
 
     path('api/', include(core_urls))
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.STATIC_URL, document_root=settings.STATIC_ROOT)

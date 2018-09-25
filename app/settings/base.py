@@ -1,8 +1,12 @@
 from decouple import config
  
-from dj_database_url import parse as db_url
+# from dj_database_url import parse as db_url
  
 from unipath import Path
+
+# Chess board default options
+BOARD_SIZE = config('BOARD_MATRIX_SIZE', default=8, cast=int)
+TURNS_AMOUNT = config('TURNS_AMOUNT', default=2, cast=int)
 
 # Project base dir
 BASE_DIR = Path(__file__).ancestor(2)
